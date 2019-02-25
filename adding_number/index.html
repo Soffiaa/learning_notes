@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>adding number</title>
+    <style>
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        #main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            margin-top: 200px;
+            font-size: 20px;
+        }
+
+        #main #input-box {
+            width: 30%;
+        }
+
+        #main #input-box div {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        #main input {
+            text-align: right;
+        }
+
+        #main #number-display {
+            margin-top: 20px;
+            font-size: 50px;
+            text-align: center;
+            width: 30%;
+            border-radius: 10px;
+            border: 2px solid rgb(179, 177, 177);
+        }
+
+        #btnRun {
+            font-size: 20px;
+            width: 120px;
+            height: 40px;
+            border: 2px solid rgb(88, 90, 90);
+            outline: none;
+            border-radius: 10px;
+            background: rgb(221, 220, 220);
+            margin-top: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        #btnRun:hover {
+            background: rgb(192, 190, 190);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div id="input-box">
+            <div>duration(s): <input id="duration" type="number" value="5"></div>
+            <div>start number: <input id="start" type="number" value="1"></div>
+            <div>end number: <input id="end" type="number" value="39"></div>
+            <div>fps: <input id="framePerSecond" type="number" value="60"></div>
+        </div>
+        <button id="btnRun">run</button>
+        <div id="number-display">0</div>
+    </div>
+    <script>
+        const btnRun = document.getElementById('btnRun');
+        const result = document.getElementById('number-display');
+        function run() {
+            let duration = parseInt(document.getElementById('duration').value, 10);
+            let start = parseInt(document.getElementById('start').value, 10);
+            let end = parseInt(document.getElementById('end').value, 10);
+            let fps = parseInt(document.getElementById('framePerSecond').value, 10);
+            const totalFrames = parseInt(duration * fps, 10);
+            const step = (end - start) / totalFrames;
+            let arrNumToShow = [];
+            for (let i = 0; i < totalFrames; i++) {
+                arrNumToShow.push(i * step + start);
+            }
+            if (arrNumToShow[arrNumToShow.length - 1] !== end) {
+                arrNumToShow.push(end);
+            }
+            console.log(arrNumToShow);
+            function renderNumber(index) {
+                result.innerText = Math.floor(arrNumToShow[index]);
+                if (index + 1 < arrNumToShow.length) {
+                    setTimeout(() => {
+                        renderNumber(index + 1);
+                    }, 1000 / fps)
+                }
+            }
+            renderNumber(0);
+        }
+        btnRun.onclick = function () {
+            run();
+        }
+
+    </script>
+</body>
+
+</html>

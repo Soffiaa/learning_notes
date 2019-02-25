@@ -7,55 +7,63 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-  html, body {
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-  }
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
 
-  body {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: auto;
-  }
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: auto;
+    }
 
-  .main {
-    width: 100%;
-    height: 100px;
-    flex-shrink: 0;
-    background: rgb(189, 144, 144);
-    /*min-height: calc(100vh - 300px);*/
-  }
+    .main {
+      width: 100%;
+      height: 100px;
+      flex-shrink: 0;
+      font-size: 50px;
+      height: 100px;
+      line-height: 100px;
+      vertical-align: middle;
+      text-align: center;
+      background: rgb(189, 144, 144);
+      /*min-height: calc(100vh - 300px);*/
+    }
 
-  .footer {
-    /*align-self: flex-end;*/
-    width: 100%;
-    height: 100px;
-    line-height: 100px;
-    text-align: center;
-    margin-top: 200px;
-    background: rgb(195, 238, 116);
-  }
+    .footer {
+      /*align-self: flex-end;*/
+      width: 100%;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      margin-top: 200px;
+      background: rgb(195, 238, 116);
+    }
   </style>
 </head>
 
 <body>
-<div class="main"></div>
-<div class="footer">footer</div>
-<script>
-let addHeight = false;
-const mainDom = document.getElementsByClassName('main')[ 0 ];
-mainDom.onclick = function() {
-    if (!addHeight) {
+  <div class="main">click me!</div>
+  <div class="footer">footer</div>
+  <script>
+    let addHeight = false;
+    const mainDom = document.getElementsByClassName('main')[0];
+    mainDom.onclick = function () {
+      if (!addHeight) {
         mainDom.style.height = '1000px';
-    } else {
+        mainDom.style.lineHeight='1000px';
+      } else {
         mainDom.style.height = '100px';
-    }
-    addHeight = !addHeight;
-};
-</script>
+        mainDom.style.lineHeight='100px';
+      }
+      addHeight = !addHeight;
+    };
+  </script>
 </body>
 
 </html>
