@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .app{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-top: 200px;
+    }
+    .toggle-button{
+      width: 100px;
+      height: 50px;
+      line-height: 50px;
+      border-radius: 10px;
+      background: rgba(94, 186, 209, 0.72);
+      border:2px solid grey;
+      margin-top: 10px;
+      margin-bottom: 50px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .traditional01.active{
+      background: #007bff;
+    }
+    .traditional02.active{
+      background: #ffd668;
+    }
+    .new-property.active{
+      background: #ff6790;
+    }
+    .new-property.empty{
+      background: #fcf6ff;
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <div>traditional method 01</div>
+  <div class="traditional01 toggle-button">click me!</div>
+  <div>traditional method 02</div>
+  <div class="traditional02 toggle-button">click me!！</div>
+  <div>new property</div>
+  <div class="new-property toggle-button">click me!!！</div>
+</div>
+<script>
+const tBtn01=document.querySelector('.traditional01')
+const tBtn02=document.querySelector('.traditional02')
+const nBtn=document.querySelector('.new-property')
+const hasClass01 = function(element, value) {
+    const r = new RegExp('(^|\\s+)'+value+'(\\s+|$)', 'g');
+    return r.test(element.className);
+}
+const addClass01 = function(element, value) {
+    if(!hasClass01(element,value)){
+        element.className += " " + value;
+    }
+}
+const removeClass01 = function(element, value) {
+    if(hasClass01(element,value)){
+        //方法2：这种方式会产生多余空格
+        const r = new RegExp('(^|\\s+)'+value+'(\\s+|$)', 'g');
+        element.className = element.className.replace(r,' ');
+    }
+}
+
+const processClassName=function(element) {
+    return element.className.trim().split(/\s+/);
+}
+const hasClass02 = function(element, value) {
+    return processClassName(element).indexOf(value)>=0;
+}
+const addClass02 = function(element, value) {
+    if(!hasClass02(element,value)){
+        let arrClassName=processClassName(element);
+        arrClassName.push(value);
+        element.className=arrClassName.join(' ');
+    }
+}
+const removeClass02 = function(element, value) {
+    if(hasClass02(element,value)){
+        //方法1：这种方式不会产生多余空格
+        let arrClass=processClassName(element);
+        let index = arrClass.indexOf(value);
+        arrClass.splice(index,1);
+        element.className = arrClass.join(' ');
+    }
+}
+const toggleClass = function(element,value,hasClassFunction,removeFunction,addFunction){
+    if(hasClassFunction(element,value)){
+        removeFunction(element,value);
+    }else{
+        addFunction(element,value);
+    }
+}
+tBtn01.addEventListener('click',()=>{
+    toggleClass(tBtn01,'active',hasClass01,removeClass01,addClass01)
+})
+tBtn02.addEventListener('click',()=>{
+    toggleClass(tBtn02,'active',hasClass02,removeClass02,addClass02)
+})
+nBtn.addEventListener('click',()=>{
+    nBtn.classList.toggle('active');
+})
+
+</script>
+</body>
+</html>
